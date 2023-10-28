@@ -2,6 +2,27 @@ from datetime import datetime
 
 from starlette.requests import Request
 
+from auth import session_manager
+
+
+def get_user_role(request: Request):
+    return session_manager.get_session_data_attrib(request, 'user_role')
+
+def is_admin_user(request: Request):
+    return get_user_role(request).lower() == 'Admin'.lower()
+
+def is_teacher_user(request: Request):
+    return get_user_role(request).lower() == 'Teacher'.lower()
+
+def is_student_user(request: Request):
+    return get_user_role(request).lower() == 'Student'.lower()
+
+def is_parent_user(request: Request):
+    return get_user_role(request).lower() == 'Parent'.lower()
+
+def get_user_id(request: Request):
+    return session_manager.get_session_data_attrib(request, 'user_id')
+
 
 def get_request_ip(request: Request):
     return request.client.host

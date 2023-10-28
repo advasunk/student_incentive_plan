@@ -14,7 +14,12 @@ api = APIRouter(tags=['course api'], prefix="/course")
 async def get_all_courses_by_teacher(request: Request):
     # get all courses from database
     user_id = session_manager.get_session_data_attrib(request, 'user_id')
-    data = course_dao.get_course_data_by_teacher_id(user_id)
+    # if logged in user is Admin, get all courses
+    if utils.is_admin_user(request):
+        data = course_dao.get_all_courses()
+    else:
+        data = course_dao.get_course_data_by_teacher_id(user_id)
+
     return templates.TemplateResponse("course_list.html",
                                       {"request": request, "data": utils.convert_dataframe_to_dict(data)})
 

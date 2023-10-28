@@ -1,5 +1,5 @@
-import importlib
 import os
+from pathlib import Path
 
 # load properties from environment based on the environment name
 env_name = os.getenv("ENV_NAME", "test")
@@ -12,11 +12,15 @@ def load_properties(file_name, sep='=', comment_char='#'):
     Read the file passed as parameter as a properties file.
     """
     global env_properties
+    path_name = None
     try:
-        path_name = '/Users/srini/Documents/Workspaces/Python_Projects/incenti_plan/resources/' + file_name
-        # path_name = importlib.resources.path('/Users/srini/Documents/Workspaces/Python_Projects/incenti_plan/resources/', file_name)
-        print(path_name)
-        with open(path_name, "rt") as f:
+        # Point to appropriate ancestor directory
+        resource_path = Path(__file__).parent.parent.parent
+        # print('resource_path: ', resource_path)
+        resource_file_path = str(resource_path) + '/resources/' + file_name
+        # path_name = importlib.resources.path(file_name)
+        # print('path_name: ', resource_file_path)
+        with open(resource_file_path, "rt") as f:
             for line in f:
                 l = line.strip()
                 if l and not l.startswith(comment_char):

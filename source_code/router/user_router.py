@@ -36,6 +36,12 @@ async def get_all_users(request: Request):
     return templates.TemplateResponse("user_list.html", {"request": request, "data_dict": data_dict})
 
 
+@api.get('/test')
+def hello(request: Request):
+    data = user_dao.get_all_users()
+    return templates.TemplateResponse('user_filter.html', {"request": request, "tableA": utils.convert_dataframe_to_dict(data)})
+
+
 @api.get("/add", status_code=200, response_class=HTMLResponse)
 async def show_add_user_page(request: Request):
     first_name = utils.get_request_attribute(request, 'first_name', '')

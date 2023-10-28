@@ -13,7 +13,11 @@ api = APIRouter(tags=['academic year to course relation api'], prefix="/course_y
 @api.get("", status_code=200, response_class=HTMLResponse)
 async def get_all_courses_by_year_(request: Request):
     user_id = session_manager.get_session_data_attrib(request, 'user_id')
-    data = course_year_dao.get_all_courses_by_teacher_id(user_id)
+    # if logged in user is Admin, get all courses
+    if utils.is_admin_user(request):
+        data = course_year_dao.get_all_courses_year_list()
+    else:
+        data = course_year_dao.get_all_courses_year_list_by_teacher_id(user_id)
 
     return templates.TemplateResponse("course_year_list.html",
                                       {"request": request, "data": utils.convert_dataframe_to_dict(data)})
@@ -45,8 +49,8 @@ async def save_course_year_data(request: Request, academic_year: str = Form(...)
     ret_sts = False
 
     try:
-        ret_sts = course_year_dao.insert_course(academic_year, course_id, room_number,
-                                                teacher_id)
+        ret_sts = course_year_dao.insert_course_year_data(academic_year, course_id, room_number,
+                                                          teacher_id)
     except Exception as e:
         print(e)
         error_message = str(e)  # "Course is already assigned to an Acadamic year"
