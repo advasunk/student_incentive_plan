@@ -27,7 +27,7 @@ from googleapiclient.errors import HttpError
 
 import os
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/srini/Documents/Workspaces/Python_Projects/incenti_plan/app/google_apis/token.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/srini/Documents/Workspaces/Python_Projects/incenti_plan/source_code/google_apis/token.json"
 
 sender = 'incenti.help@gmail.com'
 

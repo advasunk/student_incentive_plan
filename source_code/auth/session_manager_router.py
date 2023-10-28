@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi import Request, Response
 
-from app.auth import session_manager
+from source_code.auth import session_manager
 
 # api = APIRouter(tags=['course api'], prefix="/course")
 session_manager_router = APIRouter(include_in_schema=False)

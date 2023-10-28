@@ -34,8 +34,8 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 # command to start the server
-# uvicorn main:app --reload
-# main is the file name, app is the name of our app variable
+# uvicorn main:source_code --reload
+# main is the file name, source_code is the name of our source_code variable
 # and — reload will restart our server anytime we make a change to the code
 # and should only be used in development.
 
