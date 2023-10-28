@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Welcome to Incenti Plan Portal</title>
+{% endblock %}
+{% block content %}
+<h1>Add Course</h1>
+{% if error_message %}
+<p class="error"><strong>Error: </strong>{{ error_message }}</p>
+{% endif %}
+{% if status_message %}
+<p class="success"><strong>Success: </strong>{{ status_message }}</p>
+{% endif %}
+
+<form action="/course/" method="post">
+    <table>
+        <tr>
+            <th><label for="course_name">Course Name:</label></th>
+            <td><input type="text" id="course_name" name="course_name" value="{{ course_name }}"></td>
+        </tr>
+        <tr>
+            <th><label for="subject">Subject:</label></th>
+            <td>
+                <select name="subject" id="subject">
+                    {% for each_subject in data_dict['subject_list'] %}
+                    <option value="{{each_subject.subject}}" {% if each_subject.subject== subject %} selected="selected"
+                            {% endif %}>{{each_subject.desc}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="course_description">Description:</label></th>
+            <td><textarea id="course_description" name="course_description">{{ course_description }}</textarea></td>
+        </tr>
+        <tr>
+            <th><label for="submit">&nbsp;</label></th>
+            <td><input id="reset" type="reset" value="Reset">&nbsp;<input id="submit" type="submit" value="Submit"></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

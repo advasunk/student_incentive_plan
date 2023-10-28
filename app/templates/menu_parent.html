@@ -1,0 +1,20 @@
+
+<table class="navbar" width="100%">
+    <tr>
+        <td>
+            <div class="navbar">
+                <a href="/h/">Home</a>
+                <div class="subnav">
+                    <button class="subnavbtn">Review Data <i class="fa fa-caret-down"></i></button>
+                    <div class="subnav-content">
+                        <a href="/student_task?r={{ user_role }}&id={{ user_id }}">My Tasks</a>
+                    </div>
+                </div>
+                <a href="/login/logout">Logout</a>
+            </div>
+        </td>
+        <td align="right">
+            <font color="white">{{ menu_user_info_msg }}</font>
+        </td>
+    </tr>
+</table>

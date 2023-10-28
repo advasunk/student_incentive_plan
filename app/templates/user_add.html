@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Welcome to Incenti Plan Portal</title>
+{% endblock %}
+
+{% block content %}
+
+<h1>Add User</h1>
+{% if error_message %}
+<p class="error"><strong>Error: </strong>{{ error_message }}</p>
+{% endif %}
+{% if status_message %}
+<p class="success"><strong>Success: </strong>{{ status_message }}</p>
+{% endif %}
+
+<form action="/user/" method="post">
+    <table>
+        <tr>
+            <th><label for="first_name">First Name:</label>:</th>
+            <td><input type="text" id="first_name" name="first_name" value="{{ first_name }}"></td>
+            <th><label for="last_name">Last Name:</label>:</th>
+            <td><input type="text" id="last_name" name="last_name" value="{{ last_name }}"></td>
+        </tr>
+        <tr>
+            <th><label for="email">Email:</label>:</th>
+            <td><input type="text" id="email" name="email" value="{{ email }}"></td>
+            <th><label for="password">Password:</label>:</th>
+            <td><input type="password" id="password" name="password" value="{{ password }}"></td>
+        </tr>
+        <tr>
+            <th><label for="user_type">User Type:</label>:</th>
+            <td><input type="text" id="user_type" name="user_type" value="{{ user_type }}"></td>
+            <th><label for="dob">Date of Birth:</label>:</th>
+            <td><input type="date" id="dob" name="dob" value="{{ dob }}"></td>
+        </tr>
+        <tr>
+            <th><label for="user_group">User Group:</label>:</th>
+            <td><input type="text" id="user_group" name="user_group" value="{{ user_group }}"></td>
+            <th><label for="submit">&nbsp;</label></th>
+            <td><input id="reset" type="reset" value="Reset">&nbsp;<input id="submit" type="submit" value="Submit"></td>
+        </tr>
+    </table>
+</form>
+
+{% endblock %}

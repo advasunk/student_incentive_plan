@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Welcome to Incenti Plan Portal</title>
+{% endblock %}
+
+{% block content %}
+
+<h1>Link Friends & Family</h1>
+{% if data_dict['error_message'] %}
+<p class="error"><strong>Error: </strong>{{ data_dict['error_message'] }}</p>
+{% endif %}
+{% if data_dict['status_message'] %}
+<p class="success"><strong>Success: </strong>{{ data_dict['status_message'] }}</p>
+{% endif %}
+
+{% if data_dict['user_reln_list'] %}
+<h2>Search Results</h2>
+<table id="data_table">
+    <tr>
+        <th>Primary User Name</th>
+        <th>Related User Name</th>
+        <th>Related User Email</th>
+        <th>Relationship</th>
+        <th>Action</th>
+    </tr>
+    {% for user_reln in data_dict['user_reln_list'] %}
+    <tr>
+        <td>{{ user_reln['primary_user_name'] }}</td>
+        <td>{{ user_reln['related_user_name'] }}</td>
+        <td>{{ user_reln['related_user_email'] }}</td>
+        <td>{{ user_reln['reln_type'] }}</td>
+        <td><a href="/user_reln/delete?user_reln_id={{ user_reln['related_user_id'] }}"><span class="link">Delete</span></a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}
+

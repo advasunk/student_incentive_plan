@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Welcome to Incenti Plan Portal</title>
+{% endblock %}
+
+{% block content %}
+
+<h1>Add Assignment to a Course</h1>
+{% if data_dict['error_message'] %}
+<p class="error"><strong>Error: </strong>{{ data_dict['error_message'] }}</p>
+{% endif %}
+{% if data_dict['status_message'] %}
+<p class="success"><strong>Success: </strong>{{ data_dict['status_message'] }}</p>
+{% endif %}
+
+<form action="/task/" method="post">
+    <table>
+        <tr>
+            <th><label>Select Academic Year:</label></th>
+            <td>
+                <select name="academic_year">
+                    {% for each_ay in data_dict['academic_year_list'] %}
+                    <option value="{{each_ay.academic_year}}">{{each_ay.academic_year_name}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label>Select Course Name:</label></th>
+            <td>
+                <select name="year_course_reln_id">
+                    {% for each_course in data_dict['course_list'] %}
+                    <option value="{{each_course.id}}">{{each_course.subject}} - {{each_course.course_name}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="task_name">Task Name:</label></th>
+            <td><input type="text" id="task_name" name="task_name" value="{{ data_dict['task_name'] }}"></td>
+        </tr>
+        <tr>
+            <th><label for="task_type">Task Type:</label></th>
+            <td><input type="text" id="task_type" name="task_type" value="{{ data_dict['task_type'] }}"></td>
+        </tr>
+        <tr>
+            <th><label for="task_description">Description:</label></th>
+            <td><textarea id="task_description" name="task_description">{{ data_dict['task_description'] }}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="task_due_date">Status:</label>:</th>
+            <td><input type="date" id="task_due_date" name="task_due_date" value="{{ data_dict['task_due_date'] }}">
+            </td>
+        </tr>
+        <tr>
+            <th><label for="task_score">Task Score:</label></th>
+            <td><input type="text" id="task_score" name="task_score" value="{{ data_dict['task_score'] }}"></td>
+        </tr>
+        <tr>
+            <th><label for="submit">&nbsp;</label></th>
+            <td><input id="reset" type="reset" value="Reset">&nbsp;<input id="submit" type="submit" value="Submit"></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}
+

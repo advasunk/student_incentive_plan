@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Welcome to Incenti Plan Portal</title>
+{% endblock %}
+
+{% block content %}
+<h1>Academic Year to Course List Management</h1>
+
+<div style="overflow-x:auto;">
+<table id="data_table">
+    <tr>
+        <th>Academic Year</th>
+        <th>Subject</th>
+        <th>Course Name</th>
+        <th>Room Number</th>
+        <th>Teacher Name</th>
+        <th>Id</th>
+    </tr>
+
+    {% if (data == None) %}
+    <tr>
+        <td colspan="5">No data found</td>
+    </tr>
+    {% else %}
+    {% for each_course in data %}
+    <tr>
+        <td>{{ each_course['academic_year'] }}</td>
+        <td>{{ each_course['subject'] }}</td>
+        <td>{{ each_course['course_name'] }}</td>
+        <td>{{ each_course['room_number'] }}</td>
+        <td>{{ each_course['teacher_name'] }}</td>
+        <td>{{ each_course['id'] }}</td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+
+</table>
+</div>
+{% endblock %}

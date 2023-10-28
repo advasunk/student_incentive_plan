@@ -1,0 +1,55 @@
+{% extends "login_base.html" %}
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+
+{% block content %}
+<div align="center">
+    <h2>Login to IncentiPlan</h2>
+    <form method="POST" action="/login">
+        <img src="/static/images/logo.png" alt="IncentiPlan Logo" width="200" height="200">
+        <table width="50%" cellspacing="5" cellpadding="5" border="1" bgcolor="#f0f5f5">
+            {% if errors %}
+            <tr>
+                <td colspan="2">
+                    <div class="error">
+                        {% for error in errors %}
+                        <p >{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+
+            <tr>
+                <td>
+                    <label>Email: </label>
+                </td>
+                <td>
+                    <input type="text" required placeholder="Your email" name="username" value="{{ username }}"
+                           class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Password: </label>
+                </td>
+                <td>
+                    <input type="password" required placeholder="Enter your password"
+                           value="{{ password }}"
+                           name="password" class="form-control">
+                </td>
+            </tr>
+            <tr align="center">
+                <td>&nbsp;</td>
+                <td align="left">
+                    <button type="submit">Login</button>&nbsp;
+                    <button type="reset">Reset</button>&nbsp;
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+{% endblock %}

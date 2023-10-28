@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Welcome to Incenti Plan Portal</title>
+{% endblock %}
+
+{% block content %}
+
+<div align="center">
+    <h2>Welcome {{ user_name }}!</h2>
+    <div>
+        <p>Welcome to IncentiPlan,
+            "Empowering students to reach their full potential through timely achievement and collaborative support from parents, teachers, friends, and a connected community of users."</p>
+    </div>
+    {% set academic_year_list = get_academic_year_list() %}
+    {% set sel_academic_year = get_data_from_http_session(request, 'academic_year') %}
+
+
+    <h2>Configure default settings for the platform:</h2>
+    <form method="POST" action="/h/config">
+        <table width="50%" cellspacing="5" cellpadding="5" border="1" bgcolor="#f0f5f5">
+            {% if errors %}
+            <tr>
+                <td colspan="2">
+                    <div class="error">
+                        {% for error in errors %}
+                        <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+            {% if status_message %}
+            <tr>
+                <td colspan="2">
+                    <div class="error">
+                        <p class="success"><strong>Success: </strong>{{ status_message }}</p>
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+
+            <tr>
+                <td>
+                    <label>Select Academic Year: </label>
+                </td>
+                <td>
+                    <select name="academic_year">
+                        {% for each_year in academic_year_list %}
+                        <option value="{{each_year.academic_year}}" {% if each_year.academic_year== sel_academic_year %}
+                                selected="selected" {% endif %}>{{each_year.academic_year_name}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr align="center">
+                <td>&nbsp;</td>
+                <td align="left">
+                    <button type="submit">Confirm</button>&nbsp;
+                    <button type="reset">Reset</button>&nbsp;
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+{% endblock %}

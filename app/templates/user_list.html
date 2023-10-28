@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}
+<title>Welcome to Incenti Plan Portal</title>
+<script>
+    function change_user_filter() {
+        var value = document.getElementById('user_type').value;
+        var search = document.getElementById('search').value;
+        console.log(value);
+        url = '/user?user_type=' + value + '&search=' + search;
+        window.location.href = url;
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+
+{%
+set sel_user_type = data_dict['user_type']
+%}
+
+{{ sel_user_type }}
+<h1>User List Management</h1>
+
+<div style="overflow-x:auto;">
+    <form>
+        <table id="search_table">
+            <tr>
+                <th>Search by First/Last/Email:</th>
+                <td><input type="text" name="search" id="search" placeholder="Search.."
+                           value="{{ data_dict['search'] }}"
+                           onchange="javascript:change_user_filter();">
+                </td>
+                <th>Filter by User Type:</th>
+                <td>
+                    <select name="user_type" id="user_type" onchange="javascript:change_user_filter();">
+                        {% for key in data_dict['user_type_list'].keys() %}
+                        <option value="{{ key }}" {% if key== sel_user_type %} selected="selected" {% endif %}>{{
+                            data_dict['user_type_list'][key] }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table id="data_table">
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>User Type</th>
+        </tr>
+
+        {% for each_user in data_dict['users'] %}
+        <tr>
+            <td>{{ each_user['id'] }}</td>
+            <td>{{ each_user['first_name'] }}</td>
+            <td>{{ each_user['last_name'] }}</td>
+            <td>{{ each_user['email'] }}</td>
+            <td>{{ each_user['user_type'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

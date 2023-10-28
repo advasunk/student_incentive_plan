@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Welcome to Incenti Plan Portal</title>
+{% endblock %}
+
+{% block content %}
+
+<h1>Link Friends & Family</h1>
+{% if data_dict['error_message'] %}
+<p class="error"><strong>Error: </strong>{{ data_dict['error_message'] }}</p>
+{% endif %}
+{% if data_dict['status_message'] %}
+<p class="success"><strong>Success: </strong>{{ data_dict['status_message'] }}</p>
+{% endif %}
+
+<form action="/user_reln/search" method="post">
+    <table>
+        <tr>
+            <th><label for="reln_email">Enter Email to Lookup:</label></th>
+            <td><input type="text" required placeholder="Enter email to lookup" id="reln_email" name="reln_email" value="{{ data_dict['reln_email'] }}"></td>
+        </tr>
+        <tr>
+            <th><label for="submit1">&nbsp;</label></th>
+            <td><input id="submit1" type="submit" value="Lookup"> <input id="reset" type="reset" value="Reset">&nbsp;</td>
+        </tr>
+    </table>
+</form>
+
+{% if data_dict['user_list'] %}
+<h2>Search Results</h2>
+<form action="/user_reln/add" method="post">
+<table id="data_table">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Relationship</th>
+        <th>Actions</th>
+    </tr>
+    {% for user_reln in data_dict['user_list'] %}
+    <tr>
+        <td>{{ user_reln['first_name'] }}</td>
+        <td>{{ user_reln['last_name'] }}</td>
+        <td>{{ user_reln['email'] }} <input type="hidden" name="user_reln_id" value="{{ user_reln['id'] }}"></td>
+        <td>
+            {% for reln in data_dict['user_reln_list'] %}
+            <input type="radio" id="relationship" name="relationship" value="{{ reln }}" required>
+            <label for="relationship">{{ reln }}</label><br>
+            {% endfor %}
+        </td>
+        <td>
+            <label for="submit2">&nbsp;</label><input id="submit2" type="submit" value=" Add ">
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</form>
+{% else %}
+<h2>No users, who are NOT linked already are found for the search criteria</h2>
+{% endif %}
+
+{% if data_dict['user_reln_added'] %}
+{% endif %}
+
+
+{% endblock %}
+

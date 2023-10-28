@@ -1,0 +1,36 @@
+
+<table class="navbar" width="100%">
+    <tr>
+        <td>
+            <div class="navbar">
+                <a href="/h/">Home</a>
+
+                <div class="subnav">
+                    <button class="subnavbtn">Review Data <i class="fa fa-caret-down"></i></button>
+                    <div class="subnav-content">
+                        <a href="/user?r={{ user_role }}&id={{ user_id }}">List Users</a>
+                        <a href="/course?r={{ user_role }}&id={{ user_id }}">List Courses</a>
+                        <a href="/course_year?r={{ user_role }}&id={{ user_id }}">List Academic Year to Courses</a>
+                        <a href="/student_course?r={{ user_role }}&id={{ user_id }}">List Courses by Student</a>
+                        <a href="/task?r={{ user_role }}&id={{ user_id }}">Tasks by Course</a>
+                    </div>
+                </div>
+
+                <div class="subnav">
+                    <button class="subnavbtn">Admin <i class="fa fa-caret-down"></i></button>
+                    <div class="subnav-content">
+                        <a href="/user/add?r={{ user_role }}&id={{ user_id }}">Add User</a>
+                        <a href="/course/add?r={{ user_role }}&id={{ user_id }}">Add Course</a>
+                        <a href="/course_year/add?r={{ user_role }}&id={{ user_id }}">Add Academic Year to Course</a>
+                        <a href="/student_course/add?r={{ user_role }}&id={{ user_id }}">Add Course to Student</a>
+                    </div>
+                </div>
+
+                <a href="/login/logout">Logout</a>
+            </div>
+        </td>
+        <td align="right">
+            <font color="white">{{ menu_user_info_msg }}</font>
+        </td>
+    </tr>
+</table>

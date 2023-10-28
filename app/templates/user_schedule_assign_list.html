@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Welcome to Incenti Plan - Course Portal</title>
+{% endblock %}
+{% block content %}
+{% if data_dict['error_message'] %}
+<p class="error"><strong>Error: </strong>{{ data_dict['error_message'] }}</p>
+{% endif %}
+{% if data_dict['status_message'] %}
+<p class="success"><strong>Success: </strong>{{ data_dict['status_message'] }}</p>
+{% endif %}
+
+<form action="/user_schedule/assign/feedback" method="post">
+    <h2>My Assignment Schedules</h2>
+    {% if data_dict['user_schedule_assigned_user_reln_data_by_student'] %}
+    <div style="overflow-x:auto;">
+        <table id="data_table">
+            <tr>
+                <th>Year</th>
+                <th>Teacher Name</th>
+                <th>Subject</th>
+                <th>Course Name</th>
+                <th>Task Type</th>
+                <th>Task Name</th>
+                <th>Task Score</th>
+                <th>Task Due Date</th>
+                <th>My Start Date</th>
+                <th>My End Date</th>
+                <th>Completion %</th>
+                <th>Assigned To</th>
+                <th>Relationship</th>
+                <th>Comments/Feedback</th>
+                <th>Action</th>
+            </tr>
+
+            {% for each_schedule in data_dict['user_schedule_assigned_user_reln_data_by_student'] %}
+            <tr>
+                <td>{{ each_schedule['academic_year'] }}</td>
+                <td>{{ each_schedule['teacher_name'] }}</td>
+                <td>{{ each_schedule['subject'] }}</td>
+                <td>{{ each_schedule['course_name'] }}</td>
+                <td>{{ each_schedule['task_type'] }}</td>
+                <td>{{ each_schedule['task_name'] }}</td>
+                <td>{{ each_schedule['task_score'] }}</td>
+                <td>{{ each_schedule['task_due_date'] }}</td>
+                <td>{{ each_schedule['start_date'] }}</td>
+                <td>{{ each_schedule['end_date'] }}</td>
+                <td>{{ each_schedule['completion_percentage'] }}</td>
+                <td>{{ each_schedule['assigned_user_name'] }}</td>
+                <td>{{ each_schedule['reln_type'] }}</td>
+                <td>
+                    {{ each_schedule['assigned_user_comments'] }}<br>
+                    <textarea name="assigned_user_comments_{{ each_schedule['id'] }}"></textarea>
+                </td>
+                <td>
+                    <input type="hidden" name="id_{{ each_schedule['id'] }}" value="{{ each_schedule['id'] }}"></input>
+                    <button type="submit" name="submit">Post Update</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% else %}
+    <p>No schedules assigned to the logged in user.</p>
+    {% endif %}
+
+    <h2>Assignment Schedules for My Review</h2>
+    {% if data_dict['user_schedule_assigned_user_reln_data_to_user'] %}
+    <div style="overflow-x:auto;">
+        <table id="data_table">
+            <tr>
+                <th>Student Name</th>
+                <th>Year</th>
+                <th>Teacher Name</th>
+                <th>Subject</th>
+                <th>Course Name</th>
+                <th>Task Type</th>
+                <th>Task Name</th>
+                <th>Task Score</th>
+                <th>Task Due Date</th>
+                <th>My Start Date</th>
+                <th>My End Date</th>
+                <th>Completion %</th>
+                <th>Relationship</th>
+                <th>Comments/Feedback</th>
+                <th>Action</th>
+            </tr>
+
+            {% for each_schedule in data_dict['user_schedule_assigned_user_reln_data_to_user'] %}
+            <tr>
+                <td>{{ each_schedule['student_name'] }}</td>
+                <td>{{ each_schedule['academic_year'] }}</td>
+                <td>{{ each_schedule['teacher_name'] }}</td>
+                <td>{{ each_schedule['subject'] }}</td>
+                <td>{{ each_schedule['course_name'] }}</td>
+                <td>{{ each_schedule['task_type'] }}</td>
+                <td>{{ each_schedule['task_name'] }}</td>
+                <td>{{ each_schedule['task_score'] }}</td>
+                <td>{{ each_schedule['task_due_date'] }}</td>
+                <td>{{ each_schedule['start_date'] }}</td>
+                <td>{{ each_schedule['end_date'] }}</td>
+                <td>{{ each_schedule['completion_percentage'] }}</td>
+                <td>{{ each_schedule['reln_type'] }}</td>
+                <td>
+                    {{ each_schedule['assigned_user_comments'] }}<br>
+                    <textarea name="assigned_user_comments_{{ each_schedule['id'] }}"></textarea>
+                </td>
+                <td>
+                    <input type="hidden" name="id_{{ each_schedule['id'] }}" value="{{ each_schedule['id'] }}"></input>
+                    <button type="submit" name="submit">Post Update</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</form>
+{% else %}
+<p>No schedules found to review.</p>
+{% endif %}
+
+
+{% endblock %}
+
+

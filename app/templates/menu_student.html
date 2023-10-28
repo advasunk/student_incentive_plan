@@ -1,0 +1,30 @@
+
+<table class="navbar" width="100%">
+    <tr>
+        <td>
+            <div class="navbar">
+                <a href="/h/">Home</a>
+                <div class="subnav">
+                    <button class="subnavbtn">Manage Assignments <i class="fa fa-caret-down"></i></button>
+                    <div class="subnav-content">
+                        <a href="/student_course?r={{ user_role }}&id={{ user_id }}">My Courses</a>
+                        <a href="/student_task?r={{ user_role }}&id={{ user_id }}">My Assignments</a>
+                        <a href="/user_schedule?r={{ user_role }}&id={{ user_id }}">My Schedules</a>
+                        <a href="/user_schedule/assign/list?r={{ user_role }}&id={{ user_id }}">My Assigned Schedules</a>
+                    </div>
+                </div>
+                <div class="subnav">
+                    <button class="subnavbtn">Manage Connections <i class="fa fa-caret-down"></i></button>
+                    <div class="subnav-content">
+                        <a href="/user_reln/">My Relationships</a>
+                        <a href="/user_reln/add">Add Relationship</a>
+                    </div>
+                </div>
+                <a href="/login/logout">Logout</a>
+            </div>
+        </td>
+        <td align="right">
+            <font color="white">{{ menu_user_info_msg }}</font>
+        </td>
+    </tr>
+</table>

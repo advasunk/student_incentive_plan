@@ -1,0 +1,13 @@
+{% set menu_user_info_msg = 'Welcome ' + user_name + '! You are logged in as: ' + user_role %}
+
+{% if user_role.lower() == 'admin' %}
+{% include 'menu_admin.html' %}
+{% elif user_role.lower() == 'student' %}
+{% include 'menu_student.html' %}
+{% elif user_role.lower() == 'teacher' %}
+{% include 'menu_teacher.html' %}
+{% elif user_role.lower() == 'parent' %}
+{% include 'menu_parent.html' %}
+{% else %}
+{% include 'menu_default.html' %}
+{% endif %}

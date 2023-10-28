@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Welcome to Incenti Plan Portal</title>
+{% endblock %}
+
+{% block content %}
+
+<h1>Add User to Course</h1>
+{% if data_dict['error_message'] %}
+<p class="error"><strong>Error: </strong>{{ data_dict['error_message'] }}</p>
+{% endif %}
+{% if data_dict['status_message'] %}
+<p class="success"><strong>Success: </strong>{{ data_dict['status_message'] }}</p>
+{% endif %}
+
+<form action="/student_course/add" method="post">
+    <table>
+        <tr>
+            <th><label>Select Student:</label></th>
+            <td>
+                <select name="user_id">
+                    {% for each_ay in data_dict['student_list'] %}
+                    <option value="{{each_ay.id}}">{{each_ay.student_name}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label>Select Course Name:</label></th>
+            <td>
+                <select name="year_course_reln_id">
+                    {% for each_course in data_dict['courses_by_year'] %}
+                    <option value="{{each_course.id}}">{{each_course.course_desc}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="submit">&nbsp;</label></th>
+            <td><input id="reset" type="reset" value="Reset">&nbsp;<input id="submit" type="submit" value="Submit"></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}
+

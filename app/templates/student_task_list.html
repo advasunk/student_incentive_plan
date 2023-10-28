@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Welcome to Incenti Plan - Course Portal</title>
+{% endblock %}
+{% block content %}
+<h1>My Assignments</h1>
+
+<div style="overflow-x:auto;">
+    <table id="data_table">
+        <tr>
+            <th>Student Name</th>
+            <th>Year</th>
+            <th>Subject</th>
+            <th>Course Name</th>
+            <th>Task Type</th>
+            <th>Task Name</th>
+            <th>Task Score</th>
+            <th>Task Due Date</th>
+            <th>Teacher Name</th>
+            <th>Action</th>
+        </tr>
+
+        {% if data == none or data|length == 0 %}
+        <tr>
+            <td colspan="9">No tasks found</td>
+        </tr>
+        {% else %}
+        {% for each_task in data %}
+        <tr>
+            <td>{{ each_task['student_name'] }}</td>
+            <td>{{ each_task['academic_year'] }}</td>
+            <td>{{ each_task['subject'] }}</td>
+            <td>{{ each_task['course_name'] }}</td>
+            <td>{{ each_task['task_type'] }}</td>
+            <td>{{ each_task['task_name'] }}</td>
+            <td>{{ each_task['task_score'] }}</td>
+            <td>{{ each_task['task_due_date'] }}</td>
+            <td>{{ each_task['teacher_name'] }}</td>
+            {% if each_task['status'] != 'A' %}
+            <td><a href="/user_schedule/add?task_id={{ each_task['id'] }}"><span class="link">Add Schedule</span></a></td>
+            {% else %}
+            <td><a href="/user_schedule"><span class="link">Manage Schedule</span></a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+</div>
+{% endblock %}
+
+
