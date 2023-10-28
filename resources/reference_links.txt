@@ -1,0 +1,17 @@
+Install FastAPI Sessions - Getting Started:
+https://jordanisaacs.github.io/fastapi-sessions/guide/getting_started/
+
+SQL Entity Class Generator
+https://codverter.com/src/sqltoclass?prg=5&db=4&sample=1
+
+Google Mail API:
+https://chozinthet20602.medium.com/sending-email-with-python-using-gmail-api-33628e36306a
+
+Google Mail API - Python Quickstart:
+https://developers.google.com/gmail/api/quickstart/python
+
+Google Mail API - Python Quickstart - Step 1:
+https://developers.google.com/gmail/api/quickstart/python#step_1_turn_on_the
+
+Google Mail API - Python Quickstart - Step 2:
+https://developers.google.com/gmail/api/quickstart/python#step_2_install_the
