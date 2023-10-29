@@ -17,8 +17,9 @@ def get_all_schedules_by_user(user_id):
             inner join student_incentive_plan.user u on u."id" = cyn.teacher_id
         where task.year_course_reln_id in (select year_course_reln_id from student_incentive_plan.user_course_reln where user_id = {})
         and us.status is null or us.status = '' or  us.status NOT IN ('X')
+        and us.user_id = {}
         order by academic_year, c.subject, c.course_name
-    """.format(user_id)
+    """.format(user_id, user_id)
     results = pg_db_conn.execute_query(sql)
     return results
 

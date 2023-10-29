@@ -176,3 +176,11 @@ a:hover {
     height: auto;
   }
 }
+
+pre {
+    font-size: inherit;
+    color: inherit;
+    border: initial;
+    padding: initial;
+    font-family: inherit;
+}

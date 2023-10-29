@@ -15,6 +15,11 @@ async def get_all_schedules(request: Request):
     # get all schedules from database
     user_id = session_manager.get_session_data_attrib(request, 'user_id')
     data = user_schedule_dao.get_all_schedules_by_user(user_id)
+
+    # replace '&lt;' with '<' and '&gt;' with '>' from data assigned_user_comments
+    # data['assigned_user_comments'] = data['assigned_user_comments'].str.replace('&lt;', '<')
+    # data['assigned_user_comments'] = data['assigned_user_comments'].str.replace('&gt;', '>')
+
     data_dict = utils.build_data_dict(data, status_message='', error_message='')
     return templates.TemplateResponse("user_schedule_list.html",
                                       {"request": request, "data_dict": data_dict})
@@ -203,6 +208,9 @@ async def user_schedule_assign_feedback(request: Request):
     # get all schedules from database
     user_id = session_manager.get_session_data_attrib(request, 'user_id')
     user_name = session_manager.get_session_data_attrib(request, 'user_name')
+    # convert user_name (full name) to first name and first letter of last name
+    user_name_short = user_name.split(' ')[0] + ' ' + user_name.split(' ')[1][0]
+
 
     form_data = await request.form()
     # get a list of all attributes from the form
@@ -242,11 +250,11 @@ async def user_schedule_assign_feedback(request: Request):
 
         curr_comments = curr_schedule_assignment_json['assigned_user_comments']
         if curr_comments:
-            curr_comments = curr_comments + '<br>'
+            curr_comments = curr_comments + '\n'
 
         # add date and time to the comments
         assigned_user_comments = curr_comments + (
-                'Updated by ' + user_name + ' at ' + date_utility.format_date_time_to_string() + ':<br>' + value)
+                'Upd. by: ' + user_name_short + ' at ' + date_utility.format_date_time_to_string().strip() + ':\n' + value)
 
         # update user_schedule with new data
         ret_sts = user_schedule_assigned_user_reln_dao.update_user_schedule_assign_feedback(key, assigned_user_comments)

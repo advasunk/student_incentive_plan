@@ -5,20 +5,33 @@ from starlette.requests import Request
 from auth import session_manager
 
 
+def remove_password_from_user(user_data):
+    # remove 'password' from user_data if exists
+    if 'password' in user_data:
+        user_data['password'] = ''
+
+    return user_data
+
+
 def get_user_role(request: Request):
     return session_manager.get_session_data_attrib(request, 'user_role')
+
 
 def is_admin_user(request: Request):
     return get_user_role(request).lower() == 'Admin'.lower()
 
+
 def is_teacher_user(request: Request):
     return get_user_role(request).lower() == 'Teacher'.lower()
+
 
 def is_student_user(request: Request):
     return get_user_role(request).lower() == 'Student'.lower()
 
+
 def is_parent_user(request: Request):
     return get_user_role(request).lower() == 'Parent'.lower()
+
 
 def get_user_id(request: Request):
     return session_manager.get_session_data_attrib(request, 'user_id')
@@ -74,3 +87,10 @@ def get_form_attribute(form_data_list, attribute_id, default_value=None):
         if form_data[0] == attribute_id:
             return form_data[1]
     return default_value
+
+
+def convert_date_to_string(in_date_val):
+    if in_date_val is None:
+        return None
+    else:
+        return in_date_val.strftime('%Y-%m-%d')

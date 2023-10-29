@@ -55,7 +55,7 @@ def get_all_users_by_user_type(user_type):
 
 
 def get_user_data_by_email_and_password(email, password):
-    sql_stmt = ("SELECT id, first_name, last_name, email, password, "
+    sql_stmt = ("SELECT id, first_name, last_name, email, "
                 "date_of_birth, user_type, is_active FROM student_incentive_plan.user "
                 "WHERE upper(email) = '" + email.upper() + "' "
                                                            "and upper(password) = '" + password.upper() + "'")
