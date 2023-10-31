@@ -37,11 +37,11 @@ async def show_add_task_page(request: Request):
     data_dict['status_message'] = ''
     data_dict['error_message'] = ''
 
-    data_dict['task_name'] = 'name'
-    data_dict['task_type'] = 'type'
-    data_dict['task_description'] = 'desc'
-    data_dict['task_due_date'] = '10/23/2023'
-    data_dict['task_score'] = '100'
+    data_dict['task_name'] = ''
+    data_dict['task_type'] = ''
+    data_dict['task_description'] = ''
+    data_dict['task_due_date'] = ''
+    data_dict['task_score'] = ''
 
     data_dict['academic_year_list'] = platform_data_definitions.academic_year_list
     course_list = course_year_dao.get_course_data_by_year(academic_year='2023-24')
@@ -80,9 +80,9 @@ async def save_task_data(request: Request, academic_year: str = Form(...),
     data_dict['course_list'] = utils.convert_dataframe_to_dict(course_list)
 
     if ret_sts:
-        data_dict['error_message'] = 'Task ({}) could not be added to the course'.format(task_name)
-    else:
         data_dict['status_message'] = 'Task is added successfully to the course'
+    else:
+        data_dict['error_message'] = 'Task ({}) could not be added to the course'.format(task_name)
 
     return templates.TemplateResponse("course_task_add.html",
                                       {"request": request,
