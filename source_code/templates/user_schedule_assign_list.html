@@ -41,7 +41,11 @@
                 <td>{{ each_schedule['subject'] }}</td>
                 <td>{{ each_schedule['course_name'] }}</td>
                 <td>{{ each_schedule['task_type'] }}</td>
-                <td>{{ each_schedule['task_name'] }}</td>
+                <td>{{ each_schedule['task_name'] }}
+                    {% if each_schedule['status'] %}
+                    <br><span style="color: red;">{{ each_schedule['status'] }}</span>
+                    {% endif %}
+                </td>
                 <td>{{ each_schedule['task_score'] }}</td>
                 <td>{{ each_schedule['task_due_date'] }}</td>
                 <td>{{ each_schedule['start_date'] }}</td>
@@ -50,7 +54,8 @@
                 <td>{{ each_schedule['assigned_user_name'] }}</td>
                 <td>{{ each_schedule['reln_type'] }}</td>
                 <td>
-                    <pre style="white-space: pre-line;">{{ each_schedule['assigned_user_comments'] }}</pre><br>
+                    <pre style="white-space: pre-line;">{{ each_schedule['assigned_user_comments'] }}</pre>
+                    <br>
                     <textarea name="assigned_user_comments_{{ each_schedule['id'] }}"></textarea>
                 </td>
                 <td>
@@ -96,7 +101,11 @@
                 <td>{{ each_schedule['subject'] }}</td>
                 <td>{{ each_schedule['course_name'] }}</td>
                 <td>{{ each_schedule['task_type'] }}</td>
-                <td>{{ each_schedule['task_name'] }}</td>
+                <td>{{ each_schedule['task_name'] }}
+                    {% if each_schedule['status'] %}
+                    <br><span style="color: red;">{{ each_schedule['status'] }}</span>
+                    {% endif %}
+                </td>
                 <td>{{ each_schedule['task_score'] }}</td>
                 <td>{{ each_schedule['task_due_date'] }}</td>
                 <td>{{ each_schedule['start_date'] }}</td>
@@ -104,7 +113,8 @@
                 <td>{{ each_schedule['completion_percentage'] }}</td>
                 <td>{{ each_schedule['reln_type'] }}</td>
                 <td>
-                    <pre>{{ each_schedule['assigned_user_comments'] }}</pre> <br>
+                    <pre>{{ each_schedule['assigned_user_comments'] }}</pre>
+                    <br>
                     <textarea name="assigned_user_comments_{{ each_schedule['id'] }}"></textarea>
                 </td>
                 <td>

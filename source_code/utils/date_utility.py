@@ -21,5 +21,17 @@ def format_date_time_to_string(as_of_date_time=datetime.now(), fmt='%Y-%m-%d %H:
     return as_of_date_time.strftime(fmt)
 
 
+def get_current_date_as_date():
+    return datetime.now().date()
+
+
 def get_current_date(format='%Y-%m-%d'):
     return datetime.now().strftime(format)
+
+
+def format_date_to_string(in_date, format='%Y-%m-%d'):
+    return in_date.strftime(format)
+
+
+def convert_str_to_date(in_date):
+    return datetime.strptime(in_date, '%Y-%m-%d')

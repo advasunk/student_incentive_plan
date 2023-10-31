@@ -62,9 +62,9 @@
             <td><input type="date" name="end_date_{{ each_course['id'] }}" id="end_date_{{ each_course['id'] }}" value="{{ each_course['end_date'] }}"></td>
             <td><input type="number" name="completion_percentage_{{ each_course['id'] }}" id="completion_percentage_{{ each_course['id'] }}" value="{{ each_course['completion_percentage'] }}"></td>
             <td>
-                <button onclick="javascript:user_schedule_action('update', {{ each_course['id'] }});">Update</button>
-                <button onclick="javascript:user_schedule_action('delete', {{ each_course['id'] }});">Delete</button>
-                <button onclick="javascript:user_schedule_action('assign', {{ each_course['id'] }});">Make me Accountable</button>
+                <button onclick="javascript:user_schedule_action('update', '{{ each_course['id'] }}');">Update</button>
+                <button onclick="javascript:user_schedule_action('delete', '{{ each_course['id'] }}');">Delete</button>
+                <button onclick="javascript:user_schedule_action('assign', '{{ each_course['id'] }}');">Make me Accountable</button>
             </td>
         </tr>
         {% endfor %}

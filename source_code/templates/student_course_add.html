@@ -19,7 +19,7 @@
         <tr>
             <th><label>Select Student:</label></th>
             <td>
-                <select name="user_id">
+                <select name="student_id">
                     {% for each_ay in data_dict['student_list'] %}
                     <option value="{{each_ay.id}}">{{each_ay.student_name}}</option>
                     {% endfor %}

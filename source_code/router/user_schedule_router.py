@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from fastapi import APIRouter, Request, Form
 from starlette.responses import HTMLResponse
 
@@ -182,6 +184,39 @@ async def user_schedule_assign_add(request: Request, user_schedule_id: int = For
                                           {"request": request, "data_dict": data_dict})
 
 
+def check_task_due_date_and_schedule_end_date(user_schedules_dict):
+    # iterate over the dictionary and convert the string datetime to date
+    # for item in user_schedules_dict:
+    #     item['start_date'] = date_utility.convert_str_to_date(item['start_date'])
+    #     item['task_due_date'] = date_utility.convert_str_to_date(item['task_due_date'])
+    #     item['end_date'] = date_utility.convert_str_to_date(item['end_date'])
+
+
+    # iterate over the dictionary and convert the date to string
+    # for item in user_schedules_dict:
+    #     item['task_start_date'] = date_utility.format_date_to_string(item['task_start_date'])
+    #     item['task_due_date'] = date_utility.format_date_to_string(item['task_due_date'])
+    #     item['end_date'] = date_utility.format_date_to_string(item['end_date'])
+
+    user_schedules_dict_updated = []
+    # check task due date and schedule end date and set the status if the task is overdue or due with in 2 days
+    for row in user_schedules_dict:
+        # check if the task is overdue
+        if row['task_due_date'] < date_utility.get_current_date_as_date():
+            row['status'] = 'Overdue'
+        # check if the task is due with in 2 days
+        elif row['task_due_date'] <= date_utility.get_current_date_as_date() + timedelta(days=2):
+            row['status'] = 'Due in 2 days'
+        elif row['task_due_date'] < row['end_date']:
+            row['status'] = 'Overdue'
+        else:
+            row['status'] = ''
+
+        user_schedules_dict_updated.append(row)
+
+    return user_schedules_dict_updated
+
+
 @api.get("/assign/list", status_code=200, response_class=HTMLResponse)
 async def user_schedule_assign_list(request: Request):
     # get all schedules from database
@@ -192,12 +227,20 @@ async def user_schedule_assign_list(request: Request):
     # add schedules of the student
     user_schedule_assigned_user_reln_data_by_student = (
         user_schedule_assigned_user_reln_dao.get_all_schedule_assignments_by_student(user_id))
-    data_dict['user_schedule_assigned_user_reln_data_by_student'] = utils.convert_dataframe_to_dict(user_schedule_assigned_user_reln_data_by_student)
+
+    user_schedule_assigned_user_reln_data_by_student = check_task_due_date_and_schedule_end_date(
+        utils.convert_dataframe_to_dict(user_schedule_assigned_user_reln_data_by_student))
+
+    data_dict['user_schedule_assigned_user_reln_data_by_student'] = user_schedule_assigned_user_reln_data_by_student
 
     # add schedules assigned to the logged in user
     user_schedule_assigned_user_reln_data_to_user = (
         user_schedule_assigned_user_reln_dao.get_all_schedule_assignments_to_user(user_id))
-    data_dict['user_schedule_assigned_user_reln_data_to_user'] = utils.convert_dataframe_to_dict(user_schedule_assigned_user_reln_data_to_user)
+
+    user_schedule_assigned_user_reln_data_to_user = check_task_due_date_and_schedule_end_date(
+        utils.convert_dataframe_to_dict(user_schedule_assigned_user_reln_data_to_user))
+
+    data_dict['user_schedule_assigned_user_reln_data_to_user'] = user_schedule_assigned_user_reln_data_to_user
 
     return templates.TemplateResponse("user_schedule_assign_list.html",
                                       {"request": request, "data_dict": data_dict})
@@ -210,7 +253,6 @@ async def user_schedule_assign_feedback(request: Request):
     user_name = session_manager.get_session_data_attrib(request, 'user_name')
     # convert user_name (full name) to first name and first letter of last name
     user_name_short = user_name.split(' ')[0] + ' ' + user_name.split(' ')[1][0]
-
 
     form_data = await request.form()
     # get a list of all attributes from the form
@@ -263,19 +305,19 @@ async def user_schedule_assign_feedback(request: Request):
         else:
             error_message = error_message + '> Failed to update user schedule assignment feedback for ' + key
 
-
-
     data_dict = utils.build_data_dict(None, status_message=status_message, error_message=error_message)
 
     # add schedules of the student
     user_schedule_assigned_user_reln_data_by_student = (
         user_schedule_assigned_user_reln_dao.get_all_schedule_assignments_by_student(user_id))
-    data_dict['user_schedule_assigned_user_reln_data_by_student'] = utils.convert_dataframe_to_dict(user_schedule_assigned_user_reln_data_by_student)
+    data_dict['user_schedule_assigned_user_reln_data_by_student'] = utils.convert_dataframe_to_dict(
+        user_schedule_assigned_user_reln_data_by_student)
 
     # add schedules assigned to the logged in user
     user_schedule_assigned_user_reln_data_to_user = (
         user_schedule_assigned_user_reln_dao.get_all_schedule_assignments_to_user(user_id))
-    data_dict['user_schedule_assigned_user_reln_data_to_user'] = utils.convert_dataframe_to_dict(user_schedule_assigned_user_reln_data_to_user)
+    data_dict['user_schedule_assigned_user_reln_data_to_user'] = utils.convert_dataframe_to_dict(
+        user_schedule_assigned_user_reln_data_to_user)
 
     return templates.TemplateResponse("user_schedule_assign_list.html",
                                       {"request": request, "data_dict": data_dict})

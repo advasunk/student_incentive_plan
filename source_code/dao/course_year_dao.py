@@ -92,3 +92,16 @@ def insert_course_year_data(academic_year, course_id, room_number, teacher_id):
                 utils.get_unique_id(), academic_year, course_id, room_number, teacher_id))
         return True
 
+
+def get_course_data_by_year_and_teacher(user_id, academic_year):
+    sql = """
+        select c.subject, c.course_name, teacher.first_name, teacher.last_name, 
+        teacher.first_name || ' ' || teacher.last_name as teacher_name, aycr.*
+        from student_incentive_plan.course_year_reln aycr
+        inner join student_incentive_plan.course c on aycr.course_id = c.id
+        inner join student_incentive_plan.user teacher on teacher.id = aycr.teacher_id
+        where aycr.academic_year = '{}' and teacher.id = {}
+        order by academic_year, c.subject, c.course_name, teacher.first_name, teacher.last_name
+        """.format(academic_year, user_id)
+    results = pg_db_conn.execute_query(sql)
+    return results
